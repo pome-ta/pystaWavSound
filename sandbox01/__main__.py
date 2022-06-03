@@ -1,4 +1,6 @@
+import wave
 from PIL import Image as ImageP
+
 
 root_path = '../source/sampleImgWin.PNG'
 
