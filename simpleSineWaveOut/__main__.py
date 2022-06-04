@@ -4,7 +4,6 @@ import struct
 
 
 def create_wave(out_path, write_sec, frequency, sampling_rate=44100):
-
   wv = [
     sin(2 * pi * frequency * t / sampling_rate)
     for t in range(sampling_rate * write_sec)
@@ -17,6 +16,7 @@ def create_wave(out_path, write_sec, frequency, sampling_rate=44100):
   bi_wv = struct.pack('h' * len(wv16), *wv16)
 
   with wave.open(out_path, mode='wb') as f:
+    # todo: (nchannels, sampwidth, framerate, nframes, comptype, compname)
     param = (1, 2, sampling_rate, len(bi_wv), 'NONE', 'not compressed')  #パラメータ
     f.setparams(param)  #パラメータの設定
     f.writeframes(bi_wv)  #データの書き込み
