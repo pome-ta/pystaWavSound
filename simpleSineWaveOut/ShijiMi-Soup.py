@@ -1,3 +1,5 @@
+# [pythonで音を鳴らす方法を詳しめに解説 - Qiita](https://qiita.com/ShijiMi-Soup/items/3bbf34911f6e43ee14a3)
+
 import numpy as np
 import wave
 import struct
