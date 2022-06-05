@@ -19,14 +19,14 @@ print(len(wv16))
 # バイナリ化
 bi_wv = struct.pack('h' * len(wv16), *wv16)
 print(len(bi_wv))
-bibi = struct.pack('f' * len(wv), *wv)
+bibi = struct.pack('<f' * len(wv), *wv)
 #bibi = b''.join([struct.pack('I', v) for v in wv])
 
 #by_wv = bytearray.fromhex(wv16)
 
 with wave.open(out_put, mode='wb') as f:
   # todo: (nchannels, sampwidth, framerate, nframes, comptype, compname)
-  param = (2, 2, sampling_rate, len(bi_wv), 'NONE', 'not compressed')  #パラメータ
+  param = (1, 4, sampling_rate, len(bi_wv), 'NONE', 'not compressed')  #パラメータ
   f.setparams(param)  #パラメータの設定
   #f.writeframes(bi_wv)  #データの書き込み
   f.writeframes(bibi)  #データの書き込み
