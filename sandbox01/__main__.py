@@ -13,8 +13,8 @@ data = im.getdata()
 wv = []
 for d in data:
   r, g, b, a = d
-  # wv.append((r + 256 * g) / 65535)
-  # wv.append((b + 256 * a) / 65535)
+  #wv.append((r + 256 * g) / 65535)
+  #wv.append((b + 256 * a) / 65535)
   # print((b + 256 * a) / 65535 * 2 - 1)
   # print(d)
   # print(r, g, b, a)
@@ -22,8 +22,8 @@ for d in data:
   p2 = (b + 256 * a) / 65535 * 2 - 1
   wv.append(int(p1 * 32767.0))
   wv.append(int(p2 * 32767.0))
-  # wv.append(p1)
-  # wv.append(p2)
+  wv.append(p1)
+  wv.append(p2)
 
 # print(wv)
 
