@@ -3,7 +3,7 @@ import struct
 
 from PIL import Image as ImageP
 
-out_put = './out/output.wav'
+out_put = './out/out.wav'
 root_path = '../source/sampleImgMacDura32.png'
 
 im = ImageP.open(root_path)
