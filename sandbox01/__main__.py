@@ -1,56 +1,24 @@
-from itertools import chain
-import math
-
-import wave
-import struct
+from pathlib import Path
 import array
+import wave
 
-#import numpy as np
-from PIL import Image as ImageP
+wav_data_path = Path('./dump/wavData.txt')
+#wav_txt = wav_data_path.read_text()
 
-out_put = './out/out.wav'
-root_path = '../source/sampleImgMacDura32.png'
-
-im = ImageP.open(root_path)
-pixelsize_tuple = im.size
-data = im.getdata()
-
-DURATION = 32
+DURATION = 0.1
 sample = 44100
-data_range = pixelsize_tuple[0] * pixelsize_tuple[1]
-block = math.ceil((sample * DURATION) / data_range)
 
-pixel_chain = chain.from_iterable(data)
+with open(wav_data_path, encoding='utf_8') as f:
+  l_strip = [float(s.strip()) for s in f.readlines()]
+  #print(l_strip)
 
-pixel = list(pixel_chain)
-
-# xxx: `*2` 範囲外用
-channelDataLeft = array.array('f', [0 for num in range(sample * DURATION * 2)])
-channelDataRight = array.array('f', [0 for num in range(sample * DURATION * 2)])
-#channelDataLeft = [0] * (sample * DURATION)
-#channelDataRight = [0] * (sample * DURATION)
-
-print('channelDataLeft len:', len(channelDataLeft))
-print('data_range:', data_range)
-
-for i in range(block):
-  for k in range(data_range):
-    channelDataLeft[i * data_range + k] = (pixel[k * 4 + 0] + 256 * pixel[k * 4 + 1]) / 65535 * 2 - 1
-    channelDataRight[i * data_range + k] = (pixel[k * 4 + 2] + 256 * pixel[k * 4 + 3]) / 65535 * 2 - 1
-
-py_buff = []
-for left, right in zip(channelDataLeft, channelDataRight):
-  py_buff.append(left)
-  py_buff.append(right)
-  
-
-
-buf = array.array('f', py_buff)
-
+buf = array.array('f', l_strip)
+out_put = './out/out.wav'
 
 with wave.open(out_put, mode='wb') as f:
   # # todo: (nchannels, sampwidth, framerate, nframes, comptype, compname)
-  param = (2, 4, sample, sample * DURATION, 'NONE', 'not compressed')
+  param = (2, 4, sample, int(sample * DURATION), 'NONE', 'not compressed')
   f.setparams(param)
   f.writeframes(buf)
+
 
