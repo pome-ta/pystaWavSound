@@ -8,7 +8,7 @@ wav_data_path = Path('./dump/wavData.txt')
 out_put = './out/out.wav'
 #wav_txt = wav_data_path.read_text()
 
-DURATION = 16
+DURATION = 1
 sample = 44100
 
 with open(wav_data_path, encoding='utf_8') as f:
